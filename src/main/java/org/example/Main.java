@@ -32,7 +32,7 @@ public class Main {
             System.out.println("Файл не найден: " + e.getMessage());
         }
 
-        // Task2
+        // Task2 (сортировка двух типов)
 
         // 1 сортировка списка городов по наименованию в алфавитном порядке по убыванию без учета регистра
 //        Comparator<City> nameComparator = Comparator.comparing(city -> city.getName().toLowerCase());
@@ -50,9 +50,23 @@ public class Main {
 
 //        cities.forEach(System.out::println);
 
-        //Task3
-        Optional<City> cityWithMaxPopulation = findCityWithMaxPopulation(cities);
-        cityWithMaxPopulation.ifPresent(city -> System.out.println("[" + cities.indexOf(city) + "] = " + city.getPopulation()));
+        // Task3 (поиск города с максимальным населением)
+//        Optional<City> cityWithMaxPopulation = findCityWithMaxPopulation(cities);
+//        cityWithMaxPopulation.ifPresent(city -> System.out.println("[" + cities.indexOf(city) + "] = " + city.getPopulation()));
+
+
+        // Task4 (поиск количества городов в разрезе регионов)
+        Map<String, Integer> numberOfCitiesInTheRegion = new HashMap<>();
+        for(City city: cities){
+            if (!numberOfCitiesInTheRegion.containsKey(city.getRegion()))  {
+                numberOfCitiesInTheRegion.put(city.getRegion(), 0);
+            }
+            numberOfCitiesInTheRegion.put(city.getRegion(), numberOfCitiesInTheRegion.get(city.getRegion()) + 1);
+        }
+        for(Map.Entry<String, Integer> entry: numberOfCitiesInTheRegion.entrySet()){
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+
     }
     private static Optional<City> findCityWithMaxPopulation(List<City> cities) {
         if (cities.isEmpty()) {
