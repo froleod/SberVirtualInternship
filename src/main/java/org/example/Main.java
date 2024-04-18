@@ -2,8 +2,6 @@ package org.example;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -34,9 +32,11 @@ public class Main {
             System.out.println("Файл не найден: " + e.getMessage());
         }
 
+        // Task2
+
         // 1 сортировка списка городов по наименованию в алфавитном порядке по убыванию без учета регистра
-        Comparator<City> nameComparator = Comparator.comparing(city -> city.getName().toLowerCase());
-        cities.sort(nameComparator.reversed());
+//        Comparator<City> nameComparator = Comparator.comparing(city -> city.getName().toLowerCase());
+//        cities.sort(nameComparator.reversed());
         // на сайте ошибка в примере - вывод идет по возрастанию
 
 //        cities.forEach(System.out::println);
@@ -44,10 +44,27 @@ public class Main {
 
         // 2 сортировка списка городов по федеральному округу и наименованию города внутри каждого федерального округа
         // в алфавитном порядке по убыванию с учетом регистра
-        Comparator<City> districtComparator = Comparator.comparing(City::getDistrict).thenComparing(City::getName);
-        cities.sort(districtComparator.reversed());
+//        Comparator<City> districtComparator = Comparator.comparing(City::getDistrict).thenComparing(City::getName);
+//        cities.sort(districtComparator.reversed());
         // на сайте ошибка в примере - вывод идет по возрастанию
 
-        cities.forEach(System.out::println);
+//        cities.forEach(System.out::println);
+
+        //Task3
+        Optional<City> cityWithMaxPopulation = findCityWithMaxPopulation(cities);
+        cityWithMaxPopulation.ifPresent(city -> System.out.println("[" + cities.indexOf(city) + "] = " + city.getPopulation()));
+    }
+    private static Optional<City> findCityWithMaxPopulation(List<City> cities) {
+        if (cities.isEmpty()) {
+            return Optional.empty();
+        }
+
+        City cityWithMaxPopulation = cities.get(0);
+        for (City city : cities) {
+            if (city.getPopulation() > cityWithMaxPopulation.getPopulation()) {
+                cityWithMaxPopulation = city;
+            }
+        }
+        return Optional.of(cityWithMaxPopulation);
     }
 }
